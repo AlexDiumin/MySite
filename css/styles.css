@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "Montserrat-Regular";
   src: url("../fonts/Montserrat/Montserrat-Regular.ttf") format("truetype");
@@ -14,12 +15,13 @@
   font-family: "Montserrat-Bold";
   src: url("../fonts/Montserrat/Montserrat-Bold.ttf") format("truetype");
 }
-footer .copyright-wrapper p {
+footer .copyright-wrapper p, .menu-wrapper .select-wrapper .select-lang-wrapper::before,
+.menu-wrapper .select-wrapper .select-currency-wrapper::before {
   font-family: "Montserrat-Regular", sans-serif;
   font-weight: 400;
 }
 
-header .search-wrapper .search-field, .transparent-btn, .ghost-btn, .primary-btn {
+.menu-wrapper ul li a, header .search-wrapper .search-field, .transparent-btn, .ghost-btn, .primary-btn {
   font-family: "Montserrat-Medium", sans-serif;
   font-weight: 500;
 }
@@ -27,7 +29,7 @@ header .search-wrapper .search-field, .transparent-btn, .ghost-btn, .primary-btn
 .menu-btn {
   width: 36px;
   height: 36px;
-  padding: 8px;
+  padding: 10px;
   background-color: transparent;
   border: 0;
   border-radius: 2px;
@@ -54,8 +56,9 @@ header .search-wrapper .search-field, .transparent-btn, .ghost-btn, .primary-btn
   font-size: 1rem;
   line-height: 32px;
   height: 36px;
+  background-color: transparent;
   border-radius: 2px;
-  padding: 0 20px;
+  padding: 0 25px;
   text-decoration: none;
   cursor: pointer;
   transition: 0.2s;
@@ -96,6 +99,7 @@ header div, footer div {
 header {
   position: fixed;
   padding: 0 25px;
+  border-bottom: 1px solid rgba(240, 241, 245, 0.1);
 }
 header div {
   margin: 0 25px;
@@ -159,7 +163,7 @@ header .search-wrapper .search-btn {
   border-bottom-left-radius: 0;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
-  padding: 0;
+  padding: 10px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -168,10 +172,6 @@ header .search-wrapper .search-btn {
 }
 header .search-wrapper .search-btn:hover {
   background-color: #F0F1F5;
-}
-header .search-wrapper .search-btn img {
-  width: 20px;
-  height: 20px;
 }
 header .public-btns-wrapper {
   display: inline-flex;
@@ -208,6 +208,86 @@ header .sign-btns-wrapper .signup-btn:hover {
   background-color: rgba(240, 241, 245, 0.2);
 }
 
+.menu-wrapper {
+  height: calc(100vh - 50px);
+  padding: 10px 0;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  background-color: #112233;
+  transition: 0.2s;
+  transform: translateX(-100%);
+}
+.menu-wrapper ul li a {
+  font-size: 1rem;
+  line-height: 50px;
+  color: #F0F1F5;
+  width: 100%;
+  height: 50px;
+  padding: 0 50px;
+  transition: 0.2s;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.menu-wrapper ul li a:hover {
+  background-color: rgba(240, 241, 245, 0.2);
+}
+.menu-wrapper ul li a:focus {
+  background-color: #F0F1F5;
+  color: #112233;
+}
+.menu-wrapper ul li a img {
+  height: 36px;
+  width: 36px;
+  padding: 10px;
+}
+.menu-wrapper .select-wrapper {
+  margin: 50px;
+  padding: 0 10px;
+  display: flex;
+}
+.menu-wrapper .select-wrapper div {
+  position: relative;
+}
+.menu-wrapper .select-wrapper div select {
+  border: 2px solid #808993;
+  color: #F0F1F5;
+  padding: 0 10px;
+}
+.menu-wrapper .select-wrapper div select:hover {
+  border-color: rgba(240, 241, 245, 0.7);
+}
+.menu-wrapper .select-wrapper div select option {
+  background-color: #808993;
+  color: #112233;
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper::before,
+.menu-wrapper .select-wrapper .select-currency-wrapper::before {
+  font-size: 0.8rem;
+  line-height: 1rem;
+  color: #DADCE2;
+  height: 1rem;
+  background-color: #112233;
+  padding: 0 0.5rem;
+  position: absolute;
+  top: -0.5rem;
+  left: calc(12px - 0.5rem);
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper {
+  margin-right: 10px;
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper::before {
+  content: "Язык";
+}
+.menu-wrapper .select-wrapper .select-currency-wrapper::before {
+  content: "Валюта";
+}
+
+.menu-active {
+  transform: translateX(0%);
+}
+
 main {
   min-height: calc(100vh - 50px);
   width: 100%;
@@ -215,10 +295,13 @@ main {
 }
 
 footer {
+  border-top: 1px solid rgba(240, 241, 245, 0.1);
   padding: 0 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 999;
 }
 footer .rules-wrapper {
   display: inline-flex;
@@ -242,6 +325,9 @@ footer .social-wrapper {
   display: inline-flex;
 }
 footer .social-wrapper a {
+  width: 36px;
+  height: 36px;
+  padding: 10px;
   margin-left: 10px;
   display: inline-flex;
   justify-content: center;
@@ -249,10 +335,6 @@ footer .social-wrapper a {
 }
 footer .social-wrapper a:hover {
   background-color: rgba(240, 241, 245, 0.2);
-}
-footer .social-wrapper a img {
-  width: 20px;
-  height: 20px;
 }
 
 /*# sourceMappingURL=styles.css.map */
