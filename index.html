@@ -10,8 +10,8 @@
 <body>
 	
 	<header>
-		<div class="menu-btn-wrapper">
-			<button class="menu-btn" title="Меню">
+		<div class="burger-btn-wrapper">
+			<button class="burger-btn ico-btn" title="Меню">
 				<hr>
 				<hr>
 				<hr>
@@ -21,8 +21,16 @@
 			<a href="#" title="На главную"><img src="img/Ogo.svg" alt="Logo"></a>
 		</div>
 		<div class="search-wrapper">
-			<form action="#" method="post">
-				<input type="text" class="search-field" placeholder="Введите запрос" name="search" required>
+			<form action="#" method="post" autocomplete="off">
+				<input type="search" class="search-field" placeholder="Введите запрос" name="search" required>
+
+				<div class="search-autocomplete-wrapper">
+					<ul class="search-autocomplete">
+						<!-- <li class="search-autocomplete-item"><span>Морск</span>ой флот</li> -->
+						<li class="search-autocomplete-item">Морской флот</li>
+					</ul>
+				</div>
+
 			   <button type="submit" class="search-btn" title="Искать"><img src="img/search-ico.svg" alt="search"></button>
 			</form>
 		</div>
@@ -30,15 +38,21 @@
 			<a href="#" class="primary-btn pub-idea-btn">Опубликовать идею</a>
 			<a href="#" class="primary-btn pub-problem-btn">Опубликовать проблему</a>
 		</div>
-		<div class="sign-btns-wrapper">
+		<!-- <div class="sign-btns-wrapper">
 			<a href="#" class="transparent-btn signin-btn">Войти</a>
 			<a href="#" class="transparent-btn signup-btn">Зарегистрироваться</a>
+		</div> -->
+		<div class="user-btns-wrapper">
+			<button class="ico-btn user-messages-btn"><img src="img/messages.svg" alt="messages"></button>
+			<button class="ico-btn user-notifications-btn"><img src="img/notifications.svg" alt="notifications"></button>
+			<button class="user-btn"></button>
 		</div>
 	</header>
 
 	<nav class="menu-wrapper">
 		<ul class="menu-btns">
 			<li class="menu-main-btn"><a href="#"><img src="img/main-ico.svg" alt="main">Главная</a></li>
+			<li class="menu-user-btn"><a href="#"><div class="menu-user-photo"></div>Мой профиль</a></li>
 			<li class="menu-about-btn"><a href="#"><img src="img/about-ico.svg" alt="about">О проекте</a></li>
 			<li class="menu-support-btn"><a href="#"><img src="img/support-ico.svg" alt="support">Поддержка</a></li>
 		</ul>
@@ -68,9 +82,9 @@
 		</div>
 		<div class="copyright-wrapper"><p>© 2022 Алексей Дюмин</p></div>
 		<div class="social-wrapper">
-			<a href="#" class="transparent-btn" title="Мы в Facebook"><img src="img/facebook-ico.png" alt="facebook"></a>
-			<a href="#" class="transparent-btn" title="Мы в Instagram"><img src="img/instagram-ico.png" alt="instagram"></a>
-			<a href="#" class="transparent-btn" title="Мы в Telegram"><img src="img/telegram-ico.png" alt="telegram"></a>
+			<a href="#" class="ico-btn" title="Мы в Facebook"><img src="img/facebook-ico.png" alt="facebook"></a>
+			<a href="#" class="ico-btn" title="Мы в Instagram"><img src="img/instagram-ico.png" alt="instagram"></a>
+			<a href="#" class="ico-btn" title="Мы в Telegram"><img src="img/telegram-ico.png" alt="telegram"></a>
 		</div>
 	</footer>
 
