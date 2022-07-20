@@ -21,17 +21,17 @@
 			<a href="#" title="На главную"><img src="img/Ogo.svg" alt="Logo"></a>
 		</div>
 		<div class="search-wrapper">
-			<form action="#" method="post" autocomplete="off">
+			<form action="#" method="get" autocomplete="off">
 				<input type="search" class="search-field" placeholder="Введите запрос" name="search" required>
 
 				<div class="search-autocomplete-wrapper">
-					<ul class="search-autocomplete">
+					<!-- <ul class="search-autocomplete"> -->
 						<!-- <li class="search-autocomplete-item"><span>Морск</span>ой флот</li> -->
-						<li class="search-autocomplete-item">Морской флот</li>
-					</ul>
+						<!-- <li class="search-autocomplete-item">Морской флот</li> -->
+					<!-- </ul> -->
 				</div>
 
-			   <button type="submit" class="search-btn" title="Искать"><img src="img/search-ico.svg" alt="search"></button>
+			   <button type="submit" class="search-btn" title="Искать" disabled><img src="img/search-ico.svg" alt="search"></button>
 			</form>
 		</div>
 		<div class="public-btns-wrapper">
@@ -58,17 +58,38 @@
 		</ul>
 		<div class="select-wrapper">
 			<div class="select-lang-wrapper">
-				<select id="select-lang" class="ghost-btn" name="lang">
-					<option value="РУС">РУС</option>
-					<option value="УКР">УКР</option>
-					<option value="ENG">ENG</option>
-				</select>
+				<form action="#" method="post">
+					<select id="select-lang" name="lang">
+						<option value="РУС">РУС</option>
+						<option value="УКР">УКР</option>
+						<option value="ENG">ENG</option>
+					</select>
+				</form>
+
+				<span class="select-lang-value">РУС</span>
+				<div class="select-options-wrapper select-options-hidden">
+					<ul class="custom-select-options">
+						<li class="custom-select-option">РУС</li>
+						<li class="custom-select-option">УКР</li>
+						<li class="custom-select-option">ENG</li>
+					</ul>
+				</div>
 			</div>
 			<div class="select-currency-wrapper">
-				<select id="select-currency" class="ghost-btn" name="currency">
-					<option value="UAH">UAH</option>
-					<option value="USD">USD</option>
-				</select>
+				<form action="#" method="post">			
+					<select id="select-currency" name="currency">
+						<option value="UAH">UAH</option>
+						<option value="USD">USD</option>
+					</select>
+				</form>
+
+				<span class="select-currency-value">UAH</span>
+				<div class="select-options-wrapper select-options-hidden">
+					<ul class="custom-select-options">
+						<li class="custom-select-option">UAH</li>
+						<li class="custom-select-option">USD</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</nav>

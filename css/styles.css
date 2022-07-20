@@ -21,7 +21,11 @@ footer .copyright-wrapper p, .menu-wrapper .select-wrapper .select-lang-wrapper:
   font-weight: 400;
 }
 
-.menu-wrapper ul li a, header .user-btns-wrapper .user-messages-btn::after,
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-options-wrapper .custom-select-options .custom-select-option,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-options-wrapper .custom-select-options .custom-select-option, .menu-wrapper .select-wrapper .select-lang-wrapper .select-lang-value,
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-currency-value,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-lang-value,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-currency-value, .menu-wrapper ul li a, header .user-btns-wrapper .user-messages-btn::after,
 header .user-btns-wrapper .user-notifications-btn::after, header .search-wrapper form .search-autocomplete-wrapper ul li, header .search-wrapper form .search-field, .transparent-btn, .ghost-btn, .primary-btn {
   font-family: "Montserrat-Medium", sans-serif;
   font-weight: 500;
@@ -148,7 +152,9 @@ header .search-wrapper form .search-field::placeholder {
 }
 header .search-wrapper form .search-field:focus + .search-autocomplete-wrapper {
   opacity: 1;
-  height: auto;
+}
+header .search-wrapper form .search-field:focus + .search-autocomplete-wrapper * {
+  opacity: 1;
 }
 header .search-wrapper form .search-field::-webkit-search-cancel-button {
   -webkit-appearance: none;
@@ -179,28 +185,27 @@ header .search-wrapper form .search-btn {
 header .search-wrapper form .search-btn:hover {
   background-color: #F0F1F5;
 }
-header .search-wrapper form .search-autocomplete-hidden {
-  opacity: 0 !important;
-  height: 0 !important;
-}
 header .search-wrapper form .search-autocomplete-wrapper {
   background-color: #112233;
-  border-width: 0 1px 1px;
-  border-color: rgba(240, 241, 245, 0.2);
-  border-style: solid;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   margin: 0;
   position: absolute;
   top: 43px;
+  width: 100%;
+  height: auto;
   transition: 0.15s;
   opacity: 0;
-  height: 0;
-  width: 100%;
-  padding: 8px 0;
+}
+header .search-wrapper form .search-autocomplete-wrapper * {
+  opacity: 0;
 }
 header .search-wrapper form .search-autocomplete-wrapper ul {
   margin: 0;
+  border-width: 0 1px 1px;
+  border-color: rgba(240, 241, 245, 0.2);
+  border-style: solid;
+  padding: 8px 0;
 }
 header .search-wrapper form .search-autocomplete-wrapper ul li {
   font-size: 1rem;
@@ -359,20 +364,29 @@ header .user-btns-wrapper .user-notifications-btn::after {
   padding: 0 8px;
   display: flex;
 }
-.menu-wrapper .select-wrapper div {
+.menu-wrapper .select-wrapper .select-lang-wrapper {
+  margin-right: 10px;
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper::before {
+  content: "Язык";
+}
+.menu-wrapper .select-wrapper .select-currency-wrapper::before {
+  content: "Валюта";
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper,
+.menu-wrapper .select-wrapper .select-currency-wrapper {
   position: relative;
-}
-.menu-wrapper .select-wrapper div select {
+  height: 36px;
+  background-color: transparent;
   border: 2px solid #808993;
-  color: #F0F1F5;
+  border-radius: 2px;
   padding: 0 8px;
+  cursor: pointer;
+  transition: 0.15s;
 }
-.menu-wrapper .select-wrapper div select:hover {
+.menu-wrapper .select-wrapper .select-lang-wrapper:hover,
+.menu-wrapper .select-wrapper .select-currency-wrapper:hover {
   border-color: rgba(240, 241, 245, 0.7);
-}
-.menu-wrapper .select-wrapper div select option {
-  background-color: #808993;
-  color: #112233;
 }
 .menu-wrapper .select-wrapper .select-lang-wrapper::before,
 .menu-wrapper .select-wrapper .select-currency-wrapper::before {
@@ -383,17 +397,63 @@ header .user-btns-wrapper .user-notifications-btn::after {
   background-color: #112233;
   padding: 0 5px;
   position: absolute;
-  top: -0.5rem;
-  left: 5px;
+  top: calc(-0.5rem - 2px);
+  left: 3px;
 }
-.menu-wrapper .select-wrapper .select-lang-wrapper {
-  margin-right: 10px;
+.menu-wrapper .select-wrapper .select-lang-wrapper::after,
+.menu-wrapper .select-wrapper .select-currency-wrapper::after {
+  content: "";
+  border-width: 6px;
+  border-style: solid;
+  border-color: #DADCE2 transparent transparent;
+  position: absolute;
+  top: 13px;
+  right: 8px;
 }
-.menu-wrapper .select-wrapper .select-lang-wrapper::before {
-  content: "Язык";
+.menu-wrapper .select-wrapper .select-lang-wrapper form select,
+.menu-wrapper .select-wrapper .select-currency-wrapper form select {
+  display: none;
 }
-.menu-wrapper .select-wrapper .select-currency-wrapper::before {
-  content: "Валюта";
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-lang-value,
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-currency-value,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-lang-value,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-currency-value {
+  font-size: 1rem;
+  line-height: 32px;
+  color: #F0F1F5;
+  margin-right: 20px;
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-options-wrapper,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-options-wrapper {
+  width: 100%;
+  position: absolute;
+  top: 34px;
+  left: 0;
+  background-color: rgba(128, 137, 147, 0.5);
+  border-radius: 0 0 2px 2px;
+  padding: 8px 0;
+  cursor: default;
+  transition: 0.15s;
+  opacity: 1;
+  height: auto;
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-options-wrapper .custom-select-options .custom-select-option,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-options-wrapper .custom-select-options .custom-select-option {
+  font-size: 1rem;
+  line-height: 2rem;
+  color: #F0F1F5;
+  padding: 0 8px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-options-wrapper .custom-select-options .custom-select-option:hover,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-options-wrapper .custom-select-options .custom-select-option:hover {
+  background-color: rgba(128, 137, 147, 0.7);
+}
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-options-hidden,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-options-hidden {
+  opacity: 0;
+  height: 0;
 }
 
 .menu-active {

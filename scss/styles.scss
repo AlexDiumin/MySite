@@ -170,7 +170,6 @@ header {
 		display: inline-flex;
 		align-items: center;
 		flex: 1 1 200px;
-
 		position: relative;
 
 		form {
@@ -196,7 +195,10 @@ header {
 
 				&:focus + .search-autocomplete-wrapper {
 					opacity: 1;
-					height: auto;
+
+					* {
+						opacity: 1;
+					}
 				}
 
 				&::-webkit-search-cancel-button {
@@ -232,28 +234,28 @@ header {
 				}
 			}
 
-			.search-autocomplete-hidden {
-				opacity: 0 !important;
-				height: 0 !important;
-			}
 			.search-autocomplete-wrapper {
 				background-color: $dark-color;
-				border-width: 0 1px 1px;
-				border-color: rgba($light-color, .2);
-				border-style: solid;
 				border-bottom-left-radius: $border-radius-val;
 				border-bottom-right-radius: $border-radius-val;
 				margin: 0;
 				position: absolute;
 				top: ($dist2 + ($dist1 - $dist2)/2);
+				width: 100%;
+				height: auto;
 				transition: $transition-val;			
 				opacity: 0;
-				height: 0;
-				width: 100%;
-				padding: $small-padding-val 0;
+
+				* {
+					opacity: 0;
+				}
 			
 				ul {
 					margin: 0;
+					border-width: 0 1px 1px;
+					border-color: rgba($light-color, .2);
+					border-style: solid;
+					padding: $small-padding-val 0;
 
 					li {
 						@extend %font-medium;
@@ -455,51 +457,155 @@ header {
 		padding: 0 $small-padding-val;
 		display: flex;
 
-		div {
-			position: relative;
+		// div {
+		// 	position: relative;
 
-			select {
-				border: $dist8 solid $semi-dark-color;
-				color: $light-color;
-				padding: 0 $small-padding-val;
+		// 	form {
+		// 		select {
+		// 			border: $dist8 solid $semi-dark-color;
+		// 			color: $light-color;
+		// 			padding: 0 $small-padding-val;
 
-				&:hover {
-					border-color: rgba($light-color, .7);
-				}
+		// 			&:hover {
+		// 				border-color: rgba($light-color, .7);
+		// 			}
 
-				option {
-					background-color: $semi-dark-color;
-					color: $dark-color;
-				}
-			}
-		}
+		// 			option {
+		// 				background-color: $semi-dark-color;
+		// 				color: $dark-color;
+		// 			}
+		// 		}
+		// 	}
+		// }
 
-		.select-lang-wrapper::before, 
-		.select-currency-wrapper::before {
-			@extend %font-regular;
-			font-size: .8rem;
-			line-height: 1rem;
-			color: $semi-light-color;
-			height: 1rem;
-			background-color: $dark-color;
-			padding: 0 $dist7;
-			position: absolute;
-			top: -.5rem;
-			left: calc($dist8 + $small-padding-val - $dist7);			
-		}
+		// .select-lang-wrapper::before, 
+		// .select-currency-wrapper::before {
+		// 	@extend %font-regular;
+		// 	font-size: .8rem;
+		// 	line-height: 1rem;
+		// 	color: $semi-light-color;
+		// 	height: 1rem;
+		// 	background-color: $dark-color;
+		// 	padding: 0 $dist7;
+		// 	position: absolute;
+		// 	top: -.5rem;
+		// 	left: calc($dist8 + $small-padding-val - $dist7);			
+		// }
+
+		// .select-lang-wrapper {
+		// 	margin-right: $dist6;
+
+		// 	&::before {
+		// 		content: 'Язык';			
+		// 	}
+		// }
+
+		// .select-currency-wrapper {
+		// 	&::before {
+		// 		content: 'Валюта';			
+		// 	}	
+		// }
+
 
 		.select-lang-wrapper {
 			margin-right: $dist6;
-
-			&::before {
-				content: 'Язык';			
-			}
 		}
-
+		.select-lang-wrapper::before {
+			content: 'Язык';
+		}
+		.select-currency-wrapper::before {
+			content: 'Валюта';
+		}
+		.select-lang-wrapper, 
 		.select-currency-wrapper {
+			position: relative;
+
+			height: $dist2;
+			background-color: transparent;
+			border: $dist8 solid $semi-dark-color;
+			border-radius: $border-radius-val;
+			padding: 0 $small-padding-val;
+			cursor: pointer;
+			transition: $transition-val;
+
+			&:hover {
+				border-color: rgba($light-color, .7);
+			}
+
 			&::before {
-				content: 'Валюта';			
-			}	
+				@extend %font-regular;
+				font-size: .8rem;
+				line-height: 1rem;
+				color: $semi-light-color;
+				height: 1rem;
+				background-color: $dark-color;
+				padding: 0 $dist7;
+				position: absolute;
+				top: calc(-.5rem - $dist8);
+				left: ($small-padding-val - $dist7);
+			}
+
+			&::after {
+				content: '';
+				border-width: (($dist4 - $small-padding-val) / 2);
+				border-style: solid;
+				border-color: $semi-light-color transparent transparent;
+				position: absolute;
+				top: (($dist2 - $dist8 * 2) / 2 - ($dist4 - $small-padding-val) / 4);
+				right: $small-padding-val;
+			}
+
+			form {
+				select {
+					display: none;
+				}
+			}
+
+			.select-lang-value,
+			.select-currency-value {
+				@extend %font-medium;
+				font-size: 1rem;
+				line-height: ($dist2 - $dist8 * 2);
+				color: $light-color;
+				margin-right: $dist4;
+			}
+
+			.select-options-wrapper {
+				width: 100%;
+				position: absolute;
+				top: ($dist2 - $dist8);
+				left: 0;
+				background-color: rgba($semi-dark-color, .5);
+				border-radius: 0 0 $border-radius-val $border-radius-val;
+				padding: $small-padding-val 0;
+				cursor: default;
+				transition: $transition-val;
+
+				// display: block;
+				opacity: 1;
+				height: auto;
+
+				.custom-select-options {					
+					.custom-select-option {
+						@extend %font-medium;
+						font-size: 1rem;
+						line-height: 2rem;
+						color: $light-color;
+						padding: 0 $small-padding-val;
+						cursor: pointer;
+						transition: $transition-val;
+
+						&:hover {
+							background-color: rgba($semi-dark-color, .7);
+						}
+					}
+				}
+			} 
+			.select-options-hidden {
+				// display: none;
+				opacity: 0;
+				height: 0;
+			}
 		}
 	}
 }
