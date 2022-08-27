@@ -1,22 +1,41 @@
+// let dist1 = 50;
+// let dist2 = 36;
+// let dist3 = 25;
+// let dist4 = 20;
+// let dist5 = 15;
+// let dist6 = 10;
+// let dist7 = 5;
+// let dist8 = 2;
+
+let transitionVal = .1;
+
+
 /* Проверяет есть ли данный родитель у элемента */
 function checkElementHasParent(element, parent) {
 	while (element) {
-	    if (element === parent)
-	    	return true;
-	    else
-		    element = element.parentNode;
+		if (element === parent)
+			return true;
+		element = element.parentNode;
 	}
 	return false;
 }
 
 
 /* Обрабатывает mousedown (нажатие) по документу */
-document.addEventListener('mousedown', (e) => {
+document.addEventListener('click', (e) => {
 	// Сворачивает меню при клике вне его
 	let burgerBtn = document.getElementsByClassName('burger-btn')[0];
 	let menuWrapper = document.getElementsByClassName('menu-wrapper')[0];
-	if (e.target !== burgerBtn && !checkElementHasParent(e.target, menuWrapper))
+	if (!checkElementHasParent(e.target, burgerBtn) 
+		&& !checkElementHasParent(e.target, menuWrapper))
 		menuWrapper.classList.remove('menu-active');
+
+	// Убирает выпадающие списки в главном меню при клике клике вне их
+	['select-lang-wrapper', 'select-currency-wrapper'].forEach((item, index, array) => {
+		let selectWrapper = document.getElementsByClassName(item)[0];
+		if (!checkElementHasParent(e.target, selectWrapper))
+			selectWrapper.getElementsByClassName('select-options-wrapper')[0].classList.add('display-none');
+	});	
 });
 
 
@@ -58,16 +77,27 @@ function searchFocusInput(e) {
 	if (autocomplete.children.length > 0)
 		autocompleteWrapper.append(autocomplete);
 
+
+
+	// let searchField = document.getElementsByClassName('search-field')[0];
+	// document.getElementsByClassName('search-autocomplete-item').forEach((item, index, array) => {
+	// 	item.addEventListener('click', (e) => {
+	// 		searchField.value = '++++';
+	// 	});
+	// });
+
+
+
 	// Если поле поиска пустое - отключает кнопку поиска, иначе - включает
 	let searchBtn = document.getElementsByClassName('search-btn')[0];
 	searchBtn.disabled = (e.currentTarget.value.length === 0);
 }
-document.getElementsByClassName('search-field')[0].addEventListener('focus', (e) => {
-	searchFocusInput(e);
+['focus', 'input'].forEach((item, index, array) => {
+	document.getElementsByClassName('search-field')[0].addEventListener(item, (e) => {
+		searchFocusInput(e);
+	});
 });
-document.getElementsByClassName('search-field')[0].addEventListener('input', (e) => {
-	searchFocusInput(e);
-});
+
 
 
 // document.getElementsByClassName('search-field')[0].addEventListener('keydown', (e) => {
@@ -88,14 +118,9 @@ document.getElementsByClassName('search-field')[0].addEventListener('input', (e)
 
 
 
-function menuSelectWrapperClick(element) {
-	element.getElementsByClassName('select-options-wrapper')[0].classList.toggle('select-options-hidden');
-}
-
-document.getElementsByClassName('select-lang-wrapper')[0].addEventListener('click', (e) => {
-	menuSelectWrapperClick(e.currentTarget);
-});
-
-document.getElementsByClassName('select-currency-wrapper')[0].addEventListener('click', (e) => {
-	menuSelectWrapperClick(e.currentTarget);
+/* Отображает выпадающие списки главного меню по клику */
+['select-lang-wrapper', 'select-currency-wrapper'].forEach((item, index, array) => {
+	document.getElementsByClassName(item)[0].addEventListener('click', (e) => {
+		e.currentTarget.getElementsByClassName('select-options-wrapper')[0].classList.toggle('display-none');
+	});
 });

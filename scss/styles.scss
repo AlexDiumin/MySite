@@ -51,7 +51,7 @@ $big-padding-val: 50px;
 $padding-val: 25px;
 $small-padding-val: 8px;
 $border-radius-val: 2px;
-$transition-val: .15s;
+$transition-val: .1s;
 
 %btn {
 	height: $dist2;
@@ -97,6 +97,10 @@ $transition-val: .15s;
 	background-color: transparent;
 }
 
+.display-none {
+	display: none !important;
+}
+
 html {
    font-size: 14px;
 }
@@ -111,6 +115,7 @@ header, footer {
 	background-color: $dark-color;
 	display: flex;
 	align-items: center;
+	z-index: 999;
 
 	div {
 		height: $dist2;
@@ -120,7 +125,6 @@ header, footer {
 header {
 	position: fixed;
 	padding: 0 $padding-val;
-	border-bottom: 1px solid rgba($light-color, .2);
 
 	div {
 		margin: 0 ($dist1 / 2);		
@@ -194,11 +198,7 @@ header {
 				}
 
 				&:focus + .search-autocomplete-wrapper {
-					opacity: 1;
-
-					* {
-						opacity: 1;
-					}
+					display: block;
 				}
 
 				&::-webkit-search-cancel-button {
@@ -243,18 +243,10 @@ header {
 				top: ($dist2 + ($dist1 - $dist2)/2);
 				width: 100%;
 				height: auto;
-				transition: $transition-val;			
-				opacity: 0;
-
-				* {
-					opacity: 0;
-				}
+				display: none;
 			
 				ul {
 					margin: 0;
-					border-width: 0 1px 1px;
-					border-color: rgba($light-color, .2);
-					border-style: solid;
 					padding: $small-padding-val 0;
 
 					li {
@@ -262,11 +254,12 @@ header {
 						font-size: 1rem;
 						line-height: 2rem;
 						color: $light-color;
-						padding: 0 ($small-padding-val - 1px);
+						padding: 0 $small-padding-val;
 						transition: $transition-val;
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
+						cursor: default;
 
 						&:hover {
 							background-color: rgba($light-color, .2);
@@ -277,10 +270,6 @@ header {
 							color: $semi-light-color;
 						}
 					}
-					
-					// .search-autocomplete-item-hover {
-					// 	background-color: rgba($light-color, .2);
-					// }
 				}
 			}
 		}
@@ -392,16 +381,15 @@ header {
 }
 
 .menu-wrapper {
-	height: calc(100vh - $dist1);
-	padding: $small-padding-val 0;
+	height: 100vh;
+	padding: ($dist1 + $small-padding-val) 0;
 	position: fixed;
-	top: $dist1;
+	top: 0;
 	left: 0;
 	background-color: $dark-color;
 	transition: $transition-val;
 	transform: translateX(-100%);
 	overflow: auto;
-	border-right: 1px solid rgba($light-color, .2);
 
 	ul {
 		li {
@@ -519,7 +507,6 @@ header {
 		.select-lang-wrapper, 
 		.select-currency-wrapper {
 			position: relative;
-
 			height: $dist2;
 			background-color: transparent;
 			border: $dist8 solid $semi-dark-color;
@@ -579,11 +566,7 @@ header {
 				border-radius: 0 0 $border-radius-val $border-radius-val;
 				padding: $small-padding-val 0;
 				cursor: default;
-				transition: $transition-val;
-
-				// display: block;
-				opacity: 1;
-				height: auto;
+				display: block;
 
 				.custom-select-options {					
 					.custom-select-option {
@@ -600,11 +583,6 @@ header {
 						}
 					}
 				}
-			} 
-			.select-options-hidden {
-				// display: none;
-				opacity: 0;
-				height: 0;
 			}
 		}
 	}
@@ -620,13 +598,11 @@ main {
 }
 
 footer {
-	border-top: 1px solid rgba($light-color, .2);
 	padding: 0 $big-padding-val;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
-	z-index: 999;
 
 	.rules-wrapper {
 		display: inline-flex;
