@@ -7,7 +7,7 @@
 // let dist7 = 5;
 // let dist8 = 2;
 
-let transitionVal = .1;
+// let transitionVal = .1;
 
 
 /* Проверяет есть ли данный родитель у элемента */
@@ -21,7 +21,7 @@ function checkElementHasParent(element, parent) {
 }
 
 
-/* Обрабатывает mousedown (нажатие) по документу */
+/* Обрабатывает клик по документу */
 document.addEventListener('click', (e) => {
 	// Сворачивает меню при клике вне его
 	let burgerBtn = document.getElementsByClassName('burger-btn')[0];
@@ -35,7 +35,7 @@ document.addEventListener('click', (e) => {
 		let selectWrapper = document.getElementsByClassName(item)[0];
 		if (!checkElementHasParent(e.target, selectWrapper))
 			selectWrapper.getElementsByClassName('select-options-wrapper')[0].classList.add('display-none');
-	});	
+	});
 });
 
 
@@ -77,45 +77,92 @@ function searchFocusInput(e) {
 	if (autocomplete.children.length > 0)
 		autocompleteWrapper.append(autocomplete);
 
-
-
-	// let searchField = document.getElementsByClassName('search-field')[0];
-	// document.getElementsByClassName('search-autocomplete-item').forEach((item, index, array) => {
-	// 	item.addEventListener('click', (e) => {
-	// 		searchField.value = '++++';
-	// 	});
-	// });
-
-
-
-	// Если поле поиска пустое - отключает кнопку поиска, иначе - включает
+	let searchField = document.getElementsByClassName('search-field')[0];
 	let searchBtn = document.getElementsByClassName('search-btn')[0];
-	searchBtn.disabled = (e.currentTarget.value.length === 0);
+	[].forEach.call(document.getElementsByClassName('search-autocomplete-item'), (item) => {
+		// Добавляет автозаполнение в поле поиска по клику
+		item.addEventListener('mousedown', (e) => {
+			searchField.value = item.innerText;
+			searchBtn.disabled = (searchField.value.length === 0);  // Если поле поиска пустое - отключает кнопку поиска, иначе - включает
+			searchBtn.click();
+		});
+		// Имитирует :hover с помощью класса autocomplete-item-bgc-hover
+		item.addEventListener('mouseenter', (e) => {
+			unhoverAutocompleteItems(item);
+			item.classList.add('autocomplete-item-bgc-hover');
+		});
+		item.addEventListener('mouseleave', (e) => {
+			item.classList.remove('autocomplete-item-bgc-hover');
+		});
+	});
+
+	searchBtn.disabled = (e.currentTarget.value.length === 0);  // Если поле поиска пустое - отключает кнопку поиска, иначе - включает
 }
+
+/* Снимает hover с не-hover элементов */
+function unhoverAutocompleteItems(hoverItem) {
+	[].forEach.call(document.getElementsByClassName('search-autocomplete-item'), (item) => {
+		if (item !== hoverItem)
+			item.classList.remove('autocomplete-item-bgc-hover');
+	});
+}
+
 ['focus', 'input'].forEach((item, index, array) => {
 	document.getElementsByClassName('search-field')[0].addEventListener(item, (e) => {
 		searchFocusInput(e);
 	});
 });
 
+/* Отменяем дефолтный слушатель нажатий клавиш вверх/вниз при фокусе на поле поиска */
+document.getElementsByClassName('search-field')[0].addEventListener('keydown', (e) => {
+	switch (e.key) {
+		case 'ArrowUp':
+		case 'ArrowDown':
+			e.preventDefault();
+			break;
+	}
+});
 
+/* Задаем собственный слушатель нажатий клавиш при фокусе на поле поиска */
+document.getElementsByClassName('search-field')[0].addEventListener('keyup', (e) => {
+	let searchField = document.getElementsByClassName('search-field')[0];
+	let searchBtn = document.getElementsByClassName('search-btn')[0];
+	let autocompleteItems = document.getElementsByClassName('search-autocomplete-item');
+	let autocompleteHoverItem = document.getElementsByClassName('autocomplete-item-bgc-hover')[0];
+	switch (e.key) {
+		case 'ArrowUp':
+		case 'ArrowDown':
+			if (autocompleteItems.length > 0) {
+				// Изменяем hover
+				switch (e.key) {
+					case 'ArrowUp':
+						if (autocompleteHoverItem === undefined || autocompleteHoverItem === autocompleteItems[0])
+							autocompleteHoverItem = autocompleteItems[autocompleteItems.length-1]
+						else
+							autocompleteHoverItem = autocompleteHoverItem.previousSibling
+						break;
+					case 'ArrowDown':
+						if (autocompleteHoverItem === undefined || autocompleteHoverItem === autocompleteItems[autocompleteItems.length-1])
+							autocompleteHoverItem = autocompleteItems[0]
+						else
+							autocompleteHoverItem = autocompleteHoverItem.nextSibling
+						break;
+				}
+				unhoverAutocompleteItems(autocompleteHoverItem);
+				autocompleteHoverItem.classList.add('autocomplete-item-bgc-hover');
 
-// document.getElementsByClassName('search-field')[0].addEventListener('keydown', (e) => {
-// 	switch (e.key) {
-// 		case 'ArrowUp':
-// 			console.log('+++');
-// 			break;
-// 		case 'ArrowDown':
-// 			console.log('---');
+				searchField.value = autocompleteHoverItem.innerText;  // Заменяем поисковый запрос на выбранное автозаполнение
+				searchBtn.disabled = (searchField.value.length === 0);  // Если поле поиска пустое - отключает кнопку поиска, иначе - включает
 
-// 			let items = document.getElementsByClassName('search-autocomplete-item');
-// 			items[0].classList.add('search-autocomplete-item-hover');
-
-// 			break;
-// 	}
-// });
-
-
+				searchField.selectionStart = searchField.selectionEnd = searchField.value.length;  // Переносим курсор в конец поискового запроса
+			}
+			break;
+		case 'Enter':
+			if (searchField.value.length > 0)
+				searchBtn.click();
+			break;
+	}
+});
 
 
 /* Отображает выпадающие списки главного меню по клику */

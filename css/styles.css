@@ -201,6 +201,9 @@ header .search-wrapper form .search-autocomplete-wrapper ul {
   margin: 0;
   padding: 8px 0;
 }
+header .search-wrapper form .search-autocomplete-wrapper ul .autocomplete-item-bgc-hover {
+  background-color: rgba(240, 241, 245, 0.2);
+}
 header .search-wrapper form .search-autocomplete-wrapper ul li {
   font-size: 1rem;
   line-height: 2rem;
@@ -211,9 +214,6 @@ header .search-wrapper form .search-autocomplete-wrapper ul li {
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: default;
-}
-header .search-wrapper form .search-autocomplete-wrapper ul li:hover {
-  background-color: rgba(240, 241, 245, 0.2);
 }
 header .search-wrapper form .search-autocomplete-wrapper ul li span {
   color: #DADCE2;

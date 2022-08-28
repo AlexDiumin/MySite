@@ -249,6 +249,12 @@ header {
 					margin: 0;
 					padding: $small-padding-val 0;
 
+
+					.autocomplete-item-bgc-hover {
+						background-color: rgba($light-color, .2);
+					}
+
+
 					li {
 						@extend %font-medium;
 						font-size: 1rem;
@@ -261,9 +267,9 @@ header {
 						white-space: nowrap;
 						cursor: default;
 
-						&:hover {
-							background-color: rgba($light-color, .2);
-						}
+						// &:hover {
+						// 	background-color: rgba($light-color, .2);
+						// }
 
 						span {
 							@extend %font-regular;
