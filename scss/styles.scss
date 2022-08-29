@@ -236,8 +236,7 @@ header {
 
 			.search-autocomplete-wrapper {
 				background-color: $dark-color;
-				border-bottom-left-radius: $border-radius-val;
-				border-bottom-right-radius: $border-radius-val;
+				border-radius: $border-radius-val;
 				margin: 0;
 				position: absolute;
 				top: ($dist2 + ($dist1 - $dist2)/2);
@@ -248,12 +247,6 @@ header {
 				ul {
 					margin: 0;
 					padding: $small-padding-val 0;
-
-
-					.autocomplete-item-bgc-hover {
-						background-color: rgba($light-color, .2);
-					}
-
 
 					li {
 						@extend %font-medium;
@@ -267,14 +260,14 @@ header {
 						white-space: nowrap;
 						cursor: default;
 
-						// &:hover {
-						// 	background-color: rgba($light-color, .2);
-						// }
-
 						span {
 							@extend %font-regular;
 							color: $semi-light-color;
 						}
+					}
+
+					.search-autocomplete-item-hover {
+						background-color: rgba($light-color, .2);
 					}
 				}
 			}
@@ -383,6 +376,19 @@ header {
 			content: '99+';			
 			left: ($dist2 + $dist4 + $dist2 / 2);
 		}
+
+
+		.user-notifications-wrapper {
+			width: 200px;
+			height: 200px;
+			background-color: $dark-color;
+			margin: 0;
+			border-radius: $border-radius-val;
+			padding: $small-padding-val;
+			position: absolute;
+			top: ($dist1 - ($dist1 - $dist2)/2);
+			right: 0;
+		}
 	}
 }
 
@@ -451,56 +457,6 @@ header {
 		padding: 0 $small-padding-val;
 		display: flex;
 
-		// div {
-		// 	position: relative;
-
-		// 	form {
-		// 		select {
-		// 			border: $dist8 solid $semi-dark-color;
-		// 			color: $light-color;
-		// 			padding: 0 $small-padding-val;
-
-		// 			&:hover {
-		// 				border-color: rgba($light-color, .7);
-		// 			}
-
-		// 			option {
-		// 				background-color: $semi-dark-color;
-		// 				color: $dark-color;
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-		// .select-lang-wrapper::before, 
-		// .select-currency-wrapper::before {
-		// 	@extend %font-regular;
-		// 	font-size: .8rem;
-		// 	line-height: 1rem;
-		// 	color: $semi-light-color;
-		// 	height: 1rem;
-		// 	background-color: $dark-color;
-		// 	padding: 0 $dist7;
-		// 	position: absolute;
-		// 	top: -.5rem;
-		// 	left: calc($dist8 + $small-padding-val - $dist7);			
-		// }
-
-		// .select-lang-wrapper {
-		// 	margin-right: $dist6;
-
-		// 	&::before {
-		// 		content: 'Язык';			
-		// 	}
-		// }
-
-		// .select-currency-wrapper {
-		// 	&::before {
-		// 		content: 'Валюта';			
-		// 	}	
-		// }
-
-
 		.select-lang-wrapper {
 			margin-right: $dist6;
 		}
@@ -514,6 +470,7 @@ header {
 		.select-currency-wrapper {
 			position: relative;
 			height: $dist2;
+			width: ($dist1 + $dist3);
 			background-color: transparent;
 			border: $dist8 solid $semi-dark-color;
 			border-radius: $border-radius-val;
@@ -549,9 +506,9 @@ header {
 			}
 
 			form {
-				select {
-					display: none;
-				}
+				position: absolute;
+				top: -100vh;
+				left: -100vw;
 			}
 
 			.select-lang-value,
@@ -564,12 +521,12 @@ header {
 			}
 
 			.select-options-wrapper {
-				width: 100%;
+				width: ($dist1 + $dist3);
 				position: absolute;
 				top: ($dist2 - $dist8);
-				left: 0;
+				left: -$dist8;
 				background-color: rgba($semi-dark-color, .5);
-				border-radius: 0 0 $border-radius-val $border-radius-val;
+				border-radius: $border-radius-val;
 				padding: $small-padding-val 0;
 				cursor: default;
 				display: block;
@@ -581,12 +538,11 @@ header {
 						line-height: 2rem;
 						color: $light-color;
 						padding: 0 $small-padding-val;
-						cursor: pointer;
 						transition: $transition-val;
+					}
 
-						&:hover {
-							background-color: rgba($semi-dark-color, .7);
-						}
+					.custom-select-option-hover {
+						background-color: rgba($semi-dark-color, .7);
 					}
 				}
 			}

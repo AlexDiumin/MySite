@@ -45,6 +45,11 @@
 		<div class="user-btns-wrapper">
 			<button class="ico-btn user-messages-btn"><img src="img/messages.svg" alt="messages"></button>
 			<button class="ico-btn user-notifications-btn"><img src="img/notifications.svg" alt="notifications"></button>
+
+			<div class="user-notifications-wrapper">
+				
+			</div>
+			
 			<button class="user-btn"></button>
 		</div>
 	</header>
@@ -59,14 +64,14 @@
 		<div class="select-wrapper">
 			<div class="select-lang-wrapper">
 				<form action="#" method="post">
-					<select id="select-lang" name="lang">
-						<option value="РУС">РУС</option>
+					<select id="select-lang" class="menu-form-select" name="lang">
+						<option value="РУС" selected>РУС</option>
 						<option value="УКР">УКР</option>
 						<option value="ENG">ENG</option>
 					</select>
 				</form>
 
-				<span class="select-lang-value">РУС</span>
+				<span class="custom-select-value select-lang-value">РУС</span>
 				<div class="select-options-wrapper display-none">
 					<ul class="custom-select-options">
 						<li class="custom-select-option">РУС</li>
@@ -77,13 +82,13 @@
 			</div>
 			<div class="select-currency-wrapper">
 				<form action="#" method="post">			
-					<select id="select-currency" name="currency">
-						<option value="UAH">UAH</option>
+					<select id="select-currency" class="menu-form-select" name="currency">
+						<option value="UAH" selected>UAH</option>
 						<option value="USD">USD</option>
 					</select>
 				</form>
 
-				<span class="select-currency-value">UAH</span>
+				<span class="custom-select-value select-currency-value">UAH</span>
 				<div class="select-options-wrapper display-none">
 					<ul class="custom-select-options">
 						<li class="custom-select-option">UAH</li>

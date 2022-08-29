@@ -1,15 +1,3 @@
-// let dist1 = 50;
-// let dist2 = 36;
-// let dist3 = 25;
-// let dist4 = 20;
-// let dist5 = 15;
-// let dist6 = 10;
-// let dist7 = 5;
-// let dist8 = 2;
-
-// let transitionVal = .1;
-
-
 /* Проверяет есть ли данный родитель у элемента */
 function checkElementHasParent(element, parent) {
 	while (element) {
@@ -19,6 +7,17 @@ function checkElementHasParent(element, parent) {
 	}
 	return false;
 }
+
+
+
+/* Снимает hover с не-hover элементов */
+function unhoverItems(hoverItem, items, hoverClassName) {
+	[].forEach.call(items, (item) => {
+		if (item !== hoverItem)
+			item.classList.remove(hoverClassName);
+	});
+}
+
 
 
 /* Обрабатывает клик по документу */
@@ -31,18 +30,15 @@ document.addEventListener('click', (e) => {
 		menuWrapper.classList.remove('menu-active');
 
 	// Убирает выпадающие списки в главном меню при клике клике вне их
-	['select-lang-wrapper', 'select-currency-wrapper'].forEach((item, index, array) => {
+	['select-lang-wrapper', 'select-currency-wrapper'].forEach((item) => {
 		let selectWrapper = document.getElementsByClassName(item)[0];
-		if (!checkElementHasParent(e.target, selectWrapper))
+		if (!checkElementHasParent(e.target, selectWrapper)) {
 			selectWrapper.getElementsByClassName('select-options-wrapper')[0].classList.add('display-none');
+			selectWrapper.getElementsByClassName('menu-form-select')[0].blur();  // Снятие фокуса реального select
+		}
 	});
 });
 
-
-/* Обрабатывает клик по кнопке бургер-меню */
-document.getElementsByClassName('burger-btn')[0].addEventListener('click', (e) => {
-	document.getElementsByClassName('menu-wrapper')[0].classList.toggle('menu-active');
-});
 
 
 /* Обрабатывает ввод текста в поле поиска */
@@ -65,7 +61,7 @@ function searchFocusInput(e) {
 	// Добавляет подходящие запросы из датасета запросов
 	let userTerm = e.currentTarget.value.toLowerCase();
 	let searchTerm = '';
-	searchTerms.forEach((item, i, arr) => {
+	searchTerms.forEach((item) => {
 		searchTerm = item.toLowerCase();
 		if (searchTerm.startsWith(userTerm)) {
 			autocomplete.insertAdjacentHTML('beforeend', 
@@ -79,35 +75,27 @@ function searchFocusInput(e) {
 
 	let searchField = document.getElementsByClassName('search-field')[0];
 	let searchBtn = document.getElementsByClassName('search-btn')[0];
-	[].forEach.call(document.getElementsByClassName('search-autocomplete-item'), (item) => {
+	let autocompleteItems = document.getElementsByClassName('search-autocomplete-item');
+	[].forEach.call(autocompleteItems, (item) => {
 		// Добавляет автозаполнение в поле поиска по клику
 		item.addEventListener('mousedown', (e) => {
 			searchField.value = item.innerText;
 			searchBtn.disabled = (searchField.value.length === 0);  // Если поле поиска пустое - отключает кнопку поиска, иначе - включает
 			searchBtn.click();
 		});
-		// Имитирует :hover с помощью класса autocomplete-item-bgc-hover
+		// Имитирует :hover с помощью класса search-autocomplete-item-hover
 		item.addEventListener('mouseenter', (e) => {
-			unhoverAutocompleteItems(item);
-			item.classList.add('autocomplete-item-bgc-hover');
+			unhoverItems(item, autocompleteItems, 'search-autocomplete-item-hover');
+			item.classList.add('search-autocomplete-item-hover');
 		});
 		item.addEventListener('mouseleave', (e) => {
-			item.classList.remove('autocomplete-item-bgc-hover');
+			item.classList.remove('search-autocomplete-item-hover');
 		});
 	});
-
-	searchBtn.disabled = (e.currentTarget.value.length === 0);  // Если поле поиска пустое - отключает кнопку поиска, иначе - включает
+	searchBtn.disabled = (searchField.value.length === 0);  // Если поле поиска пустое - отключает кнопку поиска, иначе - включает
 }
 
-/* Снимает hover с не-hover элементов */
-function unhoverAutocompleteItems(hoverItem) {
-	[].forEach.call(document.getElementsByClassName('search-autocomplete-item'), (item) => {
-		if (item !== hoverItem)
-			item.classList.remove('autocomplete-item-bgc-hover');
-	});
-}
-
-['focus', 'input'].forEach((item, index, array) => {
+['focus', 'input'].forEach((item) => {
 	document.getElementsByClassName('search-field')[0].addEventListener(item, (e) => {
 		searchFocusInput(e);
 	});
@@ -128,7 +116,7 @@ document.getElementsByClassName('search-field')[0].addEventListener('keyup', (e)
 	let searchField = document.getElementsByClassName('search-field')[0];
 	let searchBtn = document.getElementsByClassName('search-btn')[0];
 	let autocompleteItems = document.getElementsByClassName('search-autocomplete-item');
-	let autocompleteHoverItem = document.getElementsByClassName('autocomplete-item-bgc-hover')[0];
+	let autocompleteHoverItem = document.getElementsByClassName('search-autocomplete-item-hover')[0];
 	switch (e.key) {
 		case 'ArrowUp':
 		case 'ArrowDown':
@@ -139,17 +127,17 @@ document.getElementsByClassName('search-field')[0].addEventListener('keyup', (e)
 						if (autocompleteHoverItem === undefined || autocompleteHoverItem === autocompleteItems[0])
 							autocompleteHoverItem = autocompleteItems[autocompleteItems.length-1]
 						else
-							autocompleteHoverItem = autocompleteHoverItem.previousSibling
+							autocompleteHoverItem = autocompleteHoverItem.previousElementSibling
 						break;
 					case 'ArrowDown':
 						if (autocompleteHoverItem === undefined || autocompleteHoverItem === autocompleteItems[autocompleteItems.length-1])
 							autocompleteHoverItem = autocompleteItems[0]
 						else
-							autocompleteHoverItem = autocompleteHoverItem.nextSibling
+							autocompleteHoverItem = autocompleteHoverItem.nextElementSibling
 						break;
 				}
-				unhoverAutocompleteItems(autocompleteHoverItem);
-				autocompleteHoverItem.classList.add('autocomplete-item-bgc-hover');
+				unhoverItems(autocompleteHoverItem, autocompleteItems, 'search-autocomplete-item-hover');
+				autocompleteHoverItem.classList.add('search-autocomplete-item-hover');
 
 				searchField.value = autocompleteHoverItem.innerText;  // Заменяем поисковый запрос на выбранное автозаполнение
 				searchBtn.disabled = (searchField.value.length === 0);  // Если поле поиска пустое - отключает кнопку поиска, иначе - включает
@@ -165,9 +153,123 @@ document.getElementsByClassName('search-field')[0].addEventListener('keyup', (e)
 });
 
 
-/* Отображает выпадающие списки главного меню по клику */
-['select-lang-wrapper', 'select-currency-wrapper'].forEach((item, index, array) => {
-	document.getElementsByClassName(item)[0].addEventListener('click', (e) => {
-		e.currentTarget.getElementsByClassName('select-options-wrapper')[0].classList.toggle('display-none');
+
+/* Обрабатывает клик по кнопке бургер-меню */
+document.getElementsByClassName('burger-btn')[0].addEventListener('click', (e) => {
+	document.getElementsByClassName('menu-wrapper')[0].classList.toggle('menu-active');
+});
+
+/* Отображает и скрывает выпадающие списки главного меню по клику */
+['select-lang-wrapper', 'select-currency-wrapper'].forEach((item) => {
+	let selectWrapper = document.getElementsByClassName(item)[0];
+	selectWrapper.addEventListener('click', (e) => {
+		selectWrapper.getElementsByClassName('select-options-wrapper')[0].classList.toggle('display-none');	
+		let formSelect = selectWrapper.getElementsByClassName('menu-form-select')[0];
+		if (document.activeElement === formSelect)
+			formSelect.blur();
+		else
+			formSelect.focus();
+	});
+});
+
+[].forEach.call(document.getElementsByClassName('custom-select-option'), (item, index, array) => {
+	// Имитирует :hover с помощью класса custom-select-option-hover
+	item.addEventListener('mouseenter', (e) => {
+		unhoverItems(item, array, 'custom-select-option-hover');
+		item.classList.add('custom-select-option-hover');
+	});
+	item.addEventListener('mouseleave', (e) => {
+		item.classList.remove('custom-select-option-hover');
+	});
+
+	// Обрабатываем клик по опции select в меню
+	item.addEventListener('click', (e) => {
+		// Получаем контейнер/обертку
+		let selectWrapper = document.getElementsByClassName('select-lang-wrapper')[0]
+		if (!checkElementHasParent(item, selectWrapper))
+			selectWrapper = document.getElementsByClassName('select-currency-wrapper')[0];
+
+		let customSelectValue = selectWrapper.getElementsByClassName('custom-select-value')[0];
+		let form = selectWrapper.getElementsByTagName('form')[0];
+		let formSelect = form.getElementsByClassName('menu-form-select')[0];
+		
+		if (formSelect.value !== item.innerText) {  // Если новое значение не равно старому
+			customSelectValue.innerText = formSelect.value = item.innerText;  // Изменяем значение кастомного и реального select
+			form.submit();
+		}
+		else {
+			// Скрываем выпадающий список в меню
+			setTimeout(() => {
+				selectWrapper.getElementsByClassName('select-options-wrapper')[0].classList.add('display-none');
+				selectWrapper.getElementsByClassName('menu-form-select')[0].blur();  // Снятие фокуса реального select			
+			}, 0);
+		}
+	});
+});
+
+[].forEach.call(document.getElementsByClassName('menu-form-select'), (item, index) => {
+	let customSelectOptions = document.getElementsByClassName('custom-select-options')[index].getElementsByClassName('custom-select-option');
+	
+	// Убираем hover с опций при потере фокуса select
+	item.addEventListener('blur', (e) => {
+		unhoverItems(null, customSelectOptions, 'custom-select-option-hover');
+	});
+	
+	// Отменяем дефолтный слушатель нажатий клавиш вверх/вниз при фокусе на select 
+	item.addEventListener('keydown', (e) => {
+		switch (e.key) {
+			case 'ArrowUp':
+			case 'ArrowDown':
+				e.preventDefault();
+				break;
+		}
+	});
+
+	// Задаем собственный слушатель нажатий клавиш при фокусе на select
+	item.addEventListener('keyup', (e) => {
+		let customSelectOptionHover = document.getElementsByClassName('custom-select-option-hover')[0];
+		switch (e.key) {
+			case 'ArrowUp':
+			case 'ArrowDown':
+				let customSelectValue = document.getElementsByClassName('custom-select-value')[index];
+				switch (e.key) {
+					case 'ArrowUp':
+						if (customSelectOptionHover === undefined || customSelectOptionHover === customSelectOptions[0])
+							customSelectOptionHover = customSelectOptions[customSelectOptions.length-1];
+						else
+							customSelectOptionHover = customSelectOptionHover.previousElementSibling;
+						break;
+					case 'ArrowDown':
+						if (customSelectOptionHover === undefined || customSelectOptionHover === customSelectOptions[customSelectOptions.length-1])
+							customSelectOptionHover = customSelectOptions[0];
+						else
+							customSelectOptionHover = customSelectOptionHover.nextElementSibling;
+						break;
+				}
+				unhoverItems(customSelectOptionHover, customSelectOptions, 'custom-select-option-hover');
+				customSelectOptionHover.classList.add('custom-select-option-hover');
+				
+				customSelectValue.innerText = customSelectOptionHover.innerText;  // Изменяем значение кастомного select				
+
+				break;
+			case 'Enter':
+				if (customSelectOptionHover !== undefined && customSelectOptionHover.innerText !== item.value) {
+					item.value = customSelectOptionHover.innerText;  // Изменяем значение реального select
+					item.parentNode.submit();
+				}
+				else {
+					// Получаем контейнер/обертку
+					let selectWrapper = document.getElementsByClassName('select-lang-wrapper')[0]
+					if (!checkElementHasParent(item, selectWrapper))
+						selectWrapper = document.getElementsByClassName('select-currency-wrapper')[0];
+					
+					// Скрываем выпадающий список в меню
+					setTimeout(() => {
+						selectWrapper.getElementsByClassName('select-options-wrapper')[0].classList.add('display-none');
+						selectWrapper.getElementsByClassName('menu-form-select')[0].blur();  // Снятие фокуса реального select			
+					}, 0);	
+				}
+				break;
+		}
 	});
 });

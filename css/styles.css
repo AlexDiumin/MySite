@@ -188,8 +188,7 @@ header .search-wrapper form .search-btn:hover {
 }
 header .search-wrapper form .search-autocomplete-wrapper {
   background-color: #112233;
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
+  border-radius: 2px;
   margin: 0;
   position: absolute;
   top: 43px;
@@ -200,9 +199,6 @@ header .search-wrapper form .search-autocomplete-wrapper {
 header .search-wrapper form .search-autocomplete-wrapper ul {
   margin: 0;
   padding: 8px 0;
-}
-header .search-wrapper form .search-autocomplete-wrapper ul .autocomplete-item-bgc-hover {
-  background-color: rgba(240, 241, 245, 0.2);
 }
 header .search-wrapper form .search-autocomplete-wrapper ul li {
   font-size: 1rem;
@@ -217,6 +213,9 @@ header .search-wrapper form .search-autocomplete-wrapper ul li {
 }
 header .search-wrapper form .search-autocomplete-wrapper ul li span {
   color: #DADCE2;
+}
+header .search-wrapper form .search-autocomplete-wrapper ul .search-autocomplete-item-hover {
+  background-color: rgba(240, 241, 245, 0.2);
 }
 header .public-btns-wrapper {
   display: inline-flex;
@@ -306,6 +305,17 @@ header .user-btns-wrapper .user-notifications-btn::after {
   content: "99+";
   left: 74px;
 }
+header .user-btns-wrapper .user-notifications-wrapper {
+  width: 200px;
+  height: 200px;
+  background-color: #112233;
+  margin: 0;
+  border-radius: 2px;
+  padding: 8px;
+  position: absolute;
+  top: 43px;
+  right: 0;
+}
 
 .menu-wrapper {
   height: 100vh;
@@ -371,6 +381,7 @@ header .user-btns-wrapper .user-notifications-btn::after {
 .menu-wrapper .select-wrapper .select-currency-wrapper {
   position: relative;
   height: 36px;
+  width: 75px;
   background-color: transparent;
   border: 2px solid #808993;
   border-radius: 2px;
@@ -404,9 +415,11 @@ header .user-btns-wrapper .user-notifications-btn::after {
   top: 13px;
   right: 8px;
 }
-.menu-wrapper .select-wrapper .select-lang-wrapper form select,
-.menu-wrapper .select-wrapper .select-currency-wrapper form select {
-  display: none;
+.menu-wrapper .select-wrapper .select-lang-wrapper form,
+.menu-wrapper .select-wrapper .select-currency-wrapper form {
+  position: absolute;
+  top: -100vh;
+  left: -100vw;
 }
 .menu-wrapper .select-wrapper .select-lang-wrapper .select-lang-value,
 .menu-wrapper .select-wrapper .select-lang-wrapper .select-currency-value,
@@ -419,12 +432,12 @@ header .user-btns-wrapper .user-notifications-btn::after {
 }
 .menu-wrapper .select-wrapper .select-lang-wrapper .select-options-wrapper,
 .menu-wrapper .select-wrapper .select-currency-wrapper .select-options-wrapper {
-  width: 100%;
+  width: 75px;
   position: absolute;
   top: 34px;
-  left: 0;
+  left: -2px;
   background-color: rgba(128, 137, 147, 0.5);
-  border-radius: 0 0 2px 2px;
+  border-radius: 2px;
   padding: 8px 0;
   cursor: default;
   display: block;
@@ -435,11 +448,10 @@ header .user-btns-wrapper .user-notifications-btn::after {
   line-height: 2rem;
   color: #F0F1F5;
   padding: 0 8px;
-  cursor: pointer;
   transition: 0.1s;
 }
-.menu-wrapper .select-wrapper .select-lang-wrapper .select-options-wrapper .custom-select-options .custom-select-option:hover,
-.menu-wrapper .select-wrapper .select-currency-wrapper .select-options-wrapper .custom-select-options .custom-select-option:hover {
+.menu-wrapper .select-wrapper .select-lang-wrapper .select-options-wrapper .custom-select-options .custom-select-option-hover,
+.menu-wrapper .select-wrapper .select-currency-wrapper .select-options-wrapper .custom-select-options .custom-select-option-hover {
   background-color: rgba(128, 137, 147, 0.7);
 }
 
